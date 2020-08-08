@@ -10,11 +10,14 @@ namespace UI
 {
     public class DataDisplayer : MonoBehaviour
     {
+        public static Action<bool> toggleEditModeAction;
+
         [Header("File Relative Path")]
         public string fileRelativePath = "JsonChallenge.json";
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
+        public Toggle modifyToggle;
         TeamMembersModel teamMembers;
         [Header("CellElement")]
         public TableCell cellItem;
@@ -27,6 +30,9 @@ namespace UI
                 Fill(teamMembers);
             else
                 Debug.LogError("Error loading data");
+
+            modifyToggle.isOn = false;
+            modifyToggle.onValueChanged.AddListener(ToggleEditMode);
         }
 
         public void Fill(TeamMembersModel teamMembersModel)
@@ -79,6 +85,23 @@ namespace UI
                     }
                 }
             }
+        }
+
+        public void AddAction()
+        {
+
+        }
+
+        public void DeleteAction()
+        {
+
+        }
+
+        private void ToggleEditMode(bool edit)
+        {
+            Debug.Log(edit);
+            if (toggleEditModeAction != null)
+                toggleEditModeAction(edit);
         }
     }
 }
