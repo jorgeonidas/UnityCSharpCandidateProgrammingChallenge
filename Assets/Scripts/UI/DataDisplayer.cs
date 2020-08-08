@@ -1,51 +1,81 @@
 ﻿using Models;
-using System.Collections;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DataDisplayer : MonoBehaviour
+namespace UI
 {
-    [Header("File Relative Path")]
-    public string fileRelativePath = "JsonChallenge.json";
-    [Header("UI elements")]
-    public Text tableTitleText;
-    public GridLayoutGroup gridLayoutGroup;
-    TeamMembersModel teamMembers;
-    [Header("CellElement")]
-    public TableCell cellItem;
-    // Start is called before the first frame update
-    void Start()
+    public class DataDisplayer : MonoBehaviour
     {
-        teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
-        if (teamMembers != null)
-            Fill(teamMembers);
-        else
-            Debug.LogError("Error loading data");
-    }
-    
-    public void Fill(TeamMembersModel teamMembersModel)
-    {
-        ClearCells();
-        var headers = teamMembersModel.ColumnHeaders;
-        var data = teamMembersModel.Data;
-        gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        gridLayoutGroup.constraintCount = headers.Count;
-        //title
-        tableTitleText.text = teamMembersModel.Title;
-        //fill headers
-        for (int i = 0; i < headers.Count; i++)
+        [Header("File Relative Path")]
+        public string fileRelativePath = "JsonChallenge.json";
+        [Header("UI elements")]
+        public Text tableTitleText;
+        public GridLayoutGroup gridLayoutGroup;
+        TeamMembersModel teamMembers;
+        [Header("CellElement")]
+        public TableCell cellItem;
+        // Start is called before the first frame update
+        int columCount;
+        int rowCount;
+        void Start()
         {
-            var header = Instantiate(cellItem, gridLayoutGroup.gameObject.transform);
-            header.FillCell(headers[i], true);
+            teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
+            if (teamMembers != null)
+                Fill(teamMembers);
+            else
+                Debug.LogError("Error loading data");
         }
-    }
 
-    public void ClearCells()
-    {
-        foreach (Transform child in gridLayoutGroup.transform)
+        public void Fill(TeamMembersModel teamMembersModel)
         {
-            Destroy(child.gameObject);
+            ClearCells();
+            var headers = teamMembersModel.ColumnHeaders;
+            var data = teamMembersModel.Data;
+            gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            gridLayoutGroup.constraintCount = headers.Count;
+            //title
+            tableTitleText.text = teamMembersModel.Title;
+            //fill headers
+            FillHeaders(headers);
+            FillData(data);
+        }
+
+        public void ClearCells()
+        {
+            foreach (Transform child in gridLayoutGroup.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        public void FillHeaders(List<string> headers)
+        {
+            columCount = headers.Count();
+            for (int i = 0; i < columCount; i++)
+            {
+                var header = Instantiate(cellItem, gridLayoutGroup.gameObject.transform);
+                header.FillCell(headers[i], true);
+            }
+        }
+
+        public void FillData(List<TeamMemberModel> data)
+        {
+            var type = typeof(TeamMemberModel);
+            var fieldsCount = type.GetFields().Count();
+            rowCount = data.Count();
+            var fields = type.GetFields();
+            for(int i = 0; i < rowCount; i++)
+            {
+                for(int j = 0; j < fieldsCount; j++)
+                {
+                    var cell = Instantiate(cellItem, gridLayoutGroup.transform);
+                }
+            }
         }
     }
 }
+
+

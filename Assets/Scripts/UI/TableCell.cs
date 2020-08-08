@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class TableCell : MonoBehaviour
+namespace UI
 {
-    Text dataText;
-    [SerializeField]
-    int fontZiseHeader = 60;
-    // Start is called before the first frame update
-    void Awake()
+    public class TableCell : MonoBehaviour
     {
-        dataText = GetComponentInChildren<Text>();
-    }
-    
-    public void FillCell(string value, bool header = false)
-    {
-        if (header)
+        Text dataText;
+        [SerializeField]
+        int fontZiseHeader = 60;
+        // Start is called before the first frame update
+        void Awake()
         {
-            dataText.fontSize = fontZiseHeader;
-            dataText.fontStyle = FontStyle.Bold;
+            dataText = GetComponentInChildren<Text>();
         }
 
-        dataText.text = value;
+        public void FillCell(string value, bool header = false)
+        {
+            if (header)
+            {
+                dataText.fontSize = fontZiseHeader;
+                dataText.fontStyle = FontStyle.Bold;
+            }
+
+            dataText.text = value;
+        }
     }
 }
+
+
