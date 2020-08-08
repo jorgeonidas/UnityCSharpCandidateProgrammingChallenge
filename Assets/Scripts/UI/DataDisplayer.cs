@@ -75,7 +75,7 @@ namespace UI
                     }
                     else
                     {
-                        cell.FillCell("No Exist!");
+                        cell.FillCell("<color=red>No Exist</color>");
                     }
                 }
             }
