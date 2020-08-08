@@ -4,7 +4,8 @@
         "ID",
         "Name",
         "Role",
-        "Nickname"
+        "Nickname",
+        "OtherProp"
     ],
     "Data": [
         {

@@ -20,7 +20,6 @@ namespace UI
         public TableCell cellItem;
         // Start is called before the first frame update
         int columCount;
-        int rowCount;
         void Start()
         {
             teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
@@ -64,27 +63,20 @@ namespace UI
 
         public void FillData(List<TeamMemberModel> data)
         {
-            var type = typeof(TeamMemberModel);
-            var fieldsCount = type.GetFields().Count();
-            rowCount = data.Count();
-            var fields = type.GetFields();
-           /* for(int i = 0; i < rowCount; i++)
+            foreach(var member in data)
             {
-                for(int j = 0; j < fieldsCount; j++)
+                var memberFields = member.GetType().GetFields();
+                for (int colum = 0; colum < columCount; colum++)
                 {
                     var cell = Instantiate(cellItem, gridLayoutGroup.transform);
-                }
-            }*/
-
-            foreach (var member in data)
-            {
-                Type objType = member.GetType();
-
-                foreach (var field in objType.GetFields().Where(field => field.IsPublic))
-                {
-                    var cell = Instantiate(cellItem, gridLayoutGroup.transform);
-                   // Debug.Log(string.Format("Name: {0} Value: {1}", field.Name, field.GetValue(member)));
-                    cell.FillCell((string)field.GetValue(member));
+                    if(colum < memberFields.Count())
+                    {
+                        cell.FillCell((string)memberFields.ElementAt(colum).GetValue(member));
+                    }
+                    else
+                    {
+                        cell.FillCell("No Exist!");
+                    }
                 }
             }
         }
