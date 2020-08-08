@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace UI
 {
@@ -67,11 +68,23 @@ namespace UI
             var fieldsCount = type.GetFields().Count();
             rowCount = data.Count();
             var fields = type.GetFields();
-            for(int i = 0; i < rowCount; i++)
+           /* for(int i = 0; i < rowCount; i++)
             {
                 for(int j = 0; j < fieldsCount; j++)
                 {
                     var cell = Instantiate(cellItem, gridLayoutGroup.transform);
+                }
+            }*/
+
+            foreach (var member in data)
+            {
+                Type objType = member.GetType();
+
+                foreach (var field in objType.GetFields().Where(field => field.IsPublic))
+                {
+                    var cell = Instantiate(cellItem, gridLayoutGroup.transform);
+                   // Debug.Log(string.Format("Name: {0} Value: {1}", field.Name, field.GetValue(member)));
+                    cell.FillCell((string)field.GetValue(member));
                 }
             }
         }
