@@ -14,9 +14,3 @@ namespace Models
        public string Nickname;
     }
 }
-
-
-//"ID": "001",
-//"Name": "John Doe",
-//"Role": "Engineer",
-//"Nickname": "KillerJo",

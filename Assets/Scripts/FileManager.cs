@@ -6,13 +6,13 @@ using System.IO;
 
 public class FileManager
 {
-    const string tarilingRegEx = "\\,(?!\\s*?[\\{\\[\"\'\\w])";
+    const string tailingRegEx = "\\,(?!\\s*?[\\{\\[\"\'\\w])";
     // Start is called before the first frame update
 
     public static TeamMembersModel LoadModelFromJsonFile(string fileName)
     {
         TeamMembersModel teamMembersModel = null;
-        string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
         string result;
         if (File.Exists(filePath))
         {
@@ -30,13 +30,13 @@ public class FileManager
 
     public static string TrailingCheck(string jsonString)
     {
-        System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(tarilingRegEx);
+        System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(tailingRegEx);
         return regex.Replace(jsonString, "");
     }
 
     //public void Write(string fileName)
     //{
-    //    string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);
+    //    string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
     //    StreamWriter writer = new StreamWriter(filePath, true);
     //    writer.WriteLine("Test");
