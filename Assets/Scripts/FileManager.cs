@@ -4,41 +4,31 @@ using UnityEngine;
 using Models;
 using System.IO;
 
-public class FileManager : MonoBehaviour
+public class FileManager
 {
-    [Header("File Relative Path")]
-    public string fileRelativePath = "JsonChallenge.json";
-
-    string tarilingRegEx = "\\,(?!\\s*?[\\{\\[\"\'\\w])";
+    const string tarilingRegEx = "\\,(?!\\s*?[\\{\\[\"\'\\w])";
     // Start is called before the first frame update
-    void Start()
-    {
-        LoadJson(fileRelativePath);
-        //Write("JsonChallenge.json");
-    }
 
-    public void LoadJson(string fileName)
+    public static TeamMembersModel LoadModelFromJsonFile(string fileName)
     {
+        TeamMembersModel teamMembersModel = null;
         string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);
         string result;
         if (File.Exists(filePath))
         {
             result = File.ReadAllText(filePath);
-            Debug.Log(result);
-
             result = TrailingCheck(result);
-
-            Debug.Log(result);
-
-            TeamMembersModel teamMembersModel = JsonUtility.FromJson<TeamMembersModel>(result);
+            teamMembersModel = JsonUtility.FromJson<TeamMembersModel>(result);
         }
         else
         {
             Debug.LogError(fileName +" does not exists or incorrect path");
         }
+
+        return teamMembersModel;
     }
 
-    public string TrailingCheck(string jsonString)
+    public static string TrailingCheck(string jsonString)
     {
         System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(tarilingRegEx);
         return regex.Replace(jsonString, "");
