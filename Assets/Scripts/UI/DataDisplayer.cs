@@ -13,7 +13,7 @@ public class DataDisplayer : MonoBehaviour
     public GridLayoutGroup gridLayoutGroup;
     TeamMembersModel teamMembers;
     [Header("CellElement")]
-    public GameObject cellItem;
+    public TableCell cellItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,11 +31,13 @@ public class DataDisplayer : MonoBehaviour
         var data = teamMembersModel.Data;
         gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         gridLayoutGroup.constraintCount = headers.Count;
-
+        //title
+        tableTitleText.text = teamMembersModel.Title;
         //fill headers
-        for(int i = 0; i < headers.Count; i++)
+        for (int i = 0; i < headers.Count; i++)
         {
-            Instantiate(cellItem, gridLayoutGroup.gameObject.transform);  
+            var header = Instantiate(cellItem, gridLayoutGroup.gameObject.transform);
+            header.FillCell(headers[i], true);
         }
     }
 

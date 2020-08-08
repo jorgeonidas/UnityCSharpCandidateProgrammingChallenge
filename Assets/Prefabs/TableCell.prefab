@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4092690724415843052}
   - component: {fileID: 4092690724415843053}
   m_Layer: 5
-  m_Name: Text
+  m_Name: DataText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,8 +88,9 @@ GameObject:
   - component: {fileID: 4092690724674270643}
   - component: {fileID: 4092690724674270641}
   - component: {fileID: 4092690724674270642}
+  - component: {fileID: 3195443915961848673}
   m_Layer: 5
-  m_Name: HeaderElement
+  m_Name: TableCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,3 +152,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3195443915961848673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4092690724674270652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca7acdf86ac8004b84395f2ab0c83ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fontZiseHeader: 60
