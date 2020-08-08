@@ -9,7 +9,9 @@ namespace UI
     {
         Text dataText;
         [SerializeField]
-        int fontZiseHeader = 60;
+        int fontSizeHeader = 60;
+        [SerializeField]
+        int fontSizeRegular = 56;
         // Start is called before the first frame update
         void Awake()
         {
@@ -18,11 +20,9 @@ namespace UI
 
         public void FillCell(string value, bool header = false)
         {
+            dataText.fontSize = header ? fontSizeHeader : fontSizeRegular;
             if (header)
-            {
-                dataText.fontSize = fontZiseHeader;
                 dataText.fontStyle = FontStyle.Bold;
-            }
 
             dataText.text = value;
         }
