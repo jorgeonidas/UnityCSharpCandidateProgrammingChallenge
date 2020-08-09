@@ -88,11 +88,15 @@ namespace UI
                 dataText.gameObject.SetActive(!editMode);
                 inputField.gameObject.SetActive(editMode);
                 if (editMode)
+                {
                     inputField.text = this.cellValue;
+                    inputField.Select();
+                    inputField.ActivateInputField();
+                }
                 else
                 {
-                    if (inputField.text != this.cellValue) 
-                    { 
+                    if (inputField.text != this.cellValue)
+                    {
                         this.cellValue = inputField.text;
                         dataText.text = this.cellValue;
 
