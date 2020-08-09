@@ -147,6 +147,11 @@ namespace UI
             fileChangedFlag = true;
         }
 
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
     }
 }
 
