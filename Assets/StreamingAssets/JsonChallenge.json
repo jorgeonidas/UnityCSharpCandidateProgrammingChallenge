@@ -5,7 +5,6 @@
         "Name",
         "Role",
         "Nickname",
-        "Nickname",
     ],
     "Data": [
         {
@@ -31,6 +30,18 @@
             "Name": "Sally Sue",
             "Role": "Artist",
             "Nickname": "Sue5555",
+        },
+        {
+            "ID": "056",
+            "Name": "Sally Sue",
+            "Role": "Artist",
+            "Nickname": "Sue5555",
+        },
+        {
+            "ID": "023",
+            "Name": "Claire Dawn",
+            "Role": "Engineer",
+            "Nickname": "Claw",
         },
     ]
 }

@@ -6,7 +6,7 @@ public class ViewPortChangerListener : MonoBehaviour
 {
     RectTransform rectTransform;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
     }
@@ -18,6 +18,9 @@ public class ViewPortChangerListener : MonoBehaviour
 
     public void RecalculateViewPortPosition()
     {
+        if(rectTransform == null)
+            rectTransform = GetComponent<RectTransform>();
+
         var widht = rectTransform.rect.width;
         Debug.Log(widht);
         var newXPos = widht / 2;
