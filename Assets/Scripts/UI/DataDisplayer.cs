@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 namespace UI
 {
@@ -15,7 +16,6 @@ namespace UI
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
-        public Transform gridTransform;
 
         TeamMembersModel teamMembers;
         [Header("CellElement")]
@@ -66,6 +66,7 @@ namespace UI
                 //title
                 tableTitleText.text = teamMembersModel.Title;
                 //fill headers
+                
                 FillHeaders(headers);
                 FillData(data);
             }
@@ -77,7 +78,7 @@ namespace UI
 
         public void ClearCells()
         {
-            foreach (Transform child in gridTransform)
+            foreach (Transform child in gridLayoutGroup.transform)
             {
                 Destroy(child.gameObject);
             }
@@ -88,7 +89,7 @@ namespace UI
             columCount = headers.Count();
             for (int i = 0; i < columCount; i++)
             {
-                var header = Instantiate(cellItem, gridTransform);
+                var header = Instantiate(cellItem, gridLayoutGroup.transform);
                 header.FillCell(headers[i], true);
             }
         }
@@ -100,7 +101,7 @@ namespace UI
                 var memberFields = data[row].GetType().GetFields();
                 for (int colum = 0; colum < columCount; colum++)
                 {
-                    var cell = Instantiate(cellItem, gridTransform);
+                    var cell = Instantiate(cellItem, gridLayoutGroup.transform);
                     if(colum < memberFields.Count())
                     {
                         cell.FillCell((string)memberFields.ElementAt(colum).GetValue(data[row]));
@@ -113,7 +114,6 @@ namespace UI
                 }
             }
         }
-
         public void SetFileChangedFlag()
         {
             fileChangedFlag = true;
