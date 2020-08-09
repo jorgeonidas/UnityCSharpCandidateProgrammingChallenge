@@ -8,6 +8,8 @@ namespace UI
 {
     public class TableCell : MonoBehaviour
     {
+        public static Action<Vector2, string> cellEditedAction;
+
         Text dataText;
         InputField inputField;
         [SerializeField]
@@ -93,6 +95,9 @@ namespace UI
                     { 
                         this.cellValue = inputField.text;
                         dataText.text = this.cellValue;
+
+                        if (cellEditedAction != null)
+                            cellEditedAction(cellCoord, this.cellValue);
                     }
                 }
 

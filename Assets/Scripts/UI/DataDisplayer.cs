@@ -10,14 +10,11 @@ namespace UI
 {
     public class DataDisplayer : MonoBehaviour
     {
-        //public static Action<bool> toggleEditModeAction;
-
         [Header("File Relative Path")]
         public string fileRelativePath = "JsonChallenge.json";
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
-       // public Toggle modifyToggle;
         TeamMembersModel teamMembers;
         [Header("CellElement")]
         public TableCell cellItem;
@@ -30,9 +27,16 @@ namespace UI
                 Fill(teamMembers);
             else
                 Debug.LogError("Error loading data");
+        }
 
-            //modifyToggle.isOn = false;
-            //modifyToggle.onValueChanged.AddListener(ToggleEditMode);
+        private void OnEnable()
+        {
+            TableCell.cellEditedAction += UpdateRow;
+        }
+
+        private void OnDisable()
+        {
+            TableCell.cellEditedAction -= UpdateRow;
         }
 
         public void Fill(TeamMembersModel teamMembersModel)
@@ -98,27 +102,14 @@ namespace UI
 
         }
 
-        private void ToggleEditMode(bool edit)
+        public void UpdateRow(Vector2 cellCoord, string newValue)
         {
-            Debug.Log(edit);
-            //if (toggleEditModeAction != null)
-            //    toggleEditModeAction(edit);
-
-            //if (!edit)
-            //{
-            //    foreach (Transform child in gridLayoutGroup.transform)
-            //    {
-            //        if (child.GetComponent<TableCell>())
-            //        {
-            //            var cell = child.GetComponent<TableCell>();
-            //            if (!cell.IsHeader())
-            //            {
-            //                Debug.Log(cell.GetValue());
-            //            }
-            //        }
-            //    }
-            //}
+            if(newValue != "")
+            {
+                Debug.Log("cell to modify " + cellCoord + " " + newValue);
+            }
         }
+
     }
 }
 
