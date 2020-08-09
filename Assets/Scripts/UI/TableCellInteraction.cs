@@ -13,7 +13,6 @@ public class TableCellInteraction : MonoBehaviour, IPointerClickHandler
     {
         if ((lastClick + interval) > Time.time)
         {
-            Debug.Log("Double click");
             if (doubleClickDelegate != null)
                 doubleClickDelegate();
         }

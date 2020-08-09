@@ -15,11 +15,12 @@ namespace UI
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
+
         TeamMembersModel teamMembers;
         [Header("CellElement")]
         public TableCell cellItem;
-        // Start is called before the first frame update
         int columCount;
+
         void Start()
         {
             teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
@@ -31,12 +32,12 @@ namespace UI
 
         private void OnEnable()
         {
-            TableCell.cellEditedAction += UpdateRow;
+            TableCell.cellEditedAction += UpdateCell;
         }
 
         private void OnDisable()
         {
-            TableCell.cellEditedAction -= UpdateRow;
+            TableCell.cellEditedAction -= UpdateCell;
         }
 
         public void Fill(TeamMembersModel teamMembersModel)
@@ -102,11 +103,14 @@ namespace UI
 
         }
 
-        public void UpdateRow(Vector2 cellCoord, string newValue)
+        public void UpdateCell(Vector2 cellCoord, string newValue)
         {
             if(newValue != "")
             {
                 Debug.Log("cell to modify " + cellCoord + " " + newValue);
+                int dataIndexToModify = (int)cellCoord.x;
+                var teamMemberToModify = teamMembers.Data[dataIndexToModify];
+                Debug.Log(teamMemberToModify.ID + " " + teamMemberToModify.Name + " " + teamMemberToModify.Role + " " + teamMemberToModify.Nickname);
             }
         }
 
