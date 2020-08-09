@@ -15,14 +15,41 @@ namespace UI
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
+        public Transform gridTransform;
 
         TeamMembersModel teamMembers;
         [Header("CellElement")]
         public TableCell cellItem;
         int columCount;
-
+        bool fileChangedFlag = false;
         void Start()
         {
+            LoadFromFile();
+        }
+
+        private void OnEnable()
+        {
+            TableCell.cellEditedAction += UpdateCell;
+            FileWatcher.fileChangedAction += SetFileChangedFlag;
+        }
+
+        private void OnDisable()
+        {
+            TableCell.cellEditedAction -= UpdateCell;
+            FileWatcher.fileChangedAction -= SetFileChangedFlag;
+        }
+
+        private void Update()
+        {
+            if (fileChangedFlag)
+            {
+                fileChangedFlag = false;
+                LoadFromFile();
+            }
+        }
+
+        public void LoadFromFile()
+        { 
             teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
             if (teamMembers != null)
                 Fill(teamMembers);
@@ -30,33 +57,29 @@ namespace UI
                 Debug.LogError("Error loading data");
         }
 
-        private void OnEnable()
-        {
-            TableCell.cellEditedAction += UpdateCell;
-        }
-
-        private void OnDisable()
-        {
-            TableCell.cellEditedAction -= UpdateCell;
-        }
-
         public void Fill(TeamMembersModel teamMembersModel)
         {
-            ClearCells();
-            var headers = teamMembersModel.ColumnHeaders;
-            var data = teamMembersModel.Data;
-            gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridLayoutGroup.constraintCount = headers.Count;
-            //title
-            tableTitleText.text = teamMembersModel.Title;
-            //fill headers
-            FillHeaders(headers);
-            FillData(data);
+            try { 
+                ClearCells();
+                var headers = teamMembersModel.ColumnHeaders;
+                var data = teamMembersModel.Data;
+                gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+                gridLayoutGroup.constraintCount = headers.Count;
+                //title
+                tableTitleText.text = teamMembersModel.Title;
+                //fill headers
+                FillHeaders(headers);
+                FillData(data);
+            }
+            catch(Exception e)
+            {
+                Debug.Log(e);
+            }
         }
 
         public void ClearCells()
         {
-            foreach (Transform child in gridLayoutGroup.transform)
+            foreach (Transform child in gridTransform)
             {
                 Destroy(child.gameObject);
             }
@@ -67,7 +90,7 @@ namespace UI
             columCount = headers.Count();
             for (int i = 0; i < columCount; i++)
             {
-                var header = Instantiate(cellItem, gridLayoutGroup.transform);
+                var header = Instantiate(cellItem, gridTransform);
                 header.FillCell(headers[i], true);
             }
         }
@@ -79,7 +102,7 @@ namespace UI
                 var memberFields = data[row].GetType().GetFields();
                 for (int colum = 0; colum < columCount; colum++)
                 {
-                    var cell = Instantiate(cellItem, gridLayoutGroup.transform);
+                    var cell = Instantiate(cellItem, gridTransform);
                     if(colum < memberFields.Count())
                     {
                         cell.FillCell((string)memberFields.ElementAt(colum).GetValue(data[row]));
@@ -117,6 +140,11 @@ namespace UI
 
                 FileManager.Write(fileRelativePath, updatedData);
             }
+        }
+
+        public void SetFileChangedFlag()
+        {
+            fileChangedFlag = true;
         }
 
     }

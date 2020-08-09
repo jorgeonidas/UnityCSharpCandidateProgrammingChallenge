@@ -1,23 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class FileWatcher : MonoBehaviour
 {
+    public static Action fileChangedAction;
     // Start is called before the first frame update
     void Start()
     {
-       // string filePath = Path.Combine(Application.streamingAssetsPath, "JsonChallenge.json");
         CreateFileWatcher(Application.streamingAssetsPath);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     public void CreateFileWatcher(string path)
     {
@@ -31,9 +25,6 @@ public class FileWatcher : MonoBehaviour
         watcher.Filter = "*.json";
 
         watcher.Changed += new FileSystemEventHandler(OnChanged);
-        watcher.Created += new FileSystemEventHandler(OnChanged);
-        watcher.Deleted += new FileSystemEventHandler(OnChanged);
-        watcher.Renamed += new RenamedEventHandler(OnRenamed);
 
         watcher.EnableRaisingEvents = true;
     }
@@ -41,10 +32,7 @@ public class FileWatcher : MonoBehaviour
     private static void OnChanged(object source, FileSystemEventArgs e)
     {
         Debug.Log("File: " + e.FullPath + " " + e.ChangeType);
-    }
-
-    private static void OnRenamed(object source, RenamedEventArgs e)
-    {
-        Debug.LogFormat("File: {0} renamed to {1}", e.OldFullPath, e.FullPath);
+        if (fileChangedAction != null)
+            fileChangedAction();
     }
 }
