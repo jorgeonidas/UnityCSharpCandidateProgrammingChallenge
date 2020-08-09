@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Models;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class FileManager
 {
     const string tailingRegEx = "\\,(?!\\s*?[\\{\\[\"\'\\w])";
-    // Start is called before the first frame update
 
     public static TeamMembersModel LoadModelFromJsonFile(string fileName)
     {
@@ -30,18 +30,24 @@ public class FileManager
 
     public static string TrailingCheck(string jsonString)
     {
-        System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(tailingRegEx);
+        Regex regex = new Regex(tailingRegEx);
         return regex.Replace(jsonString, "");
     }
 
-    //public void Write(string fileName)
-    //{
-    //    string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+    static public void Write(string fileName, string data)
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
 
-    //    StreamWriter writer = new StreamWriter(filePath, true);
-    //    writer.WriteLine("Test");
-    //    writer.Close();
+        if (File.Exists(filePath))
+        {
+            StreamWriter writer = new StreamWriter(filePath);
+            writer.Write(data);
+            writer.Close();
+        }
+        else
+        {
+            Debug.LogError(fileName + " does not exists or incorrect path");
+        }
 
-    //    LoadJson(fileName);
-    //}
+    }
 }

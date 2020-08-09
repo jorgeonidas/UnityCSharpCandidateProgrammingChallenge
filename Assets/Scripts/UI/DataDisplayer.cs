@@ -107,14 +107,15 @@ namespace UI
         {
             if(newValue != "")
             {
-                Debug.Log("cell to modify " + cellCoord + " " + newValue);
                 int dataIndexToModify = (int)cellCoord.x;
                 int fieldIndexToModify = (int)cellCoord.y;
+
                 var teamMemberToModify = teamMembers.Data[dataIndexToModify];
-                //Debug.Log(teamMemberToModify.ID + " " + teamMemberToModify.Name + " " + teamMemberToModify.Role + " " + teamMemberToModify.Nickname);
                 var memberFields = teamMemberToModify.GetType().GetFields();
                 memberFields.ElementAt(fieldIndexToModify).SetValue(teamMemberToModify, newValue);
-                //Debug.Log(teamMemberToModify.ID + " " + teamMemberToModify.Name + " " + teamMemberToModify.Role + " " + teamMemberToModify.Nickname);
+                string updatedData = JsonUtility.ToJson(teamMembers, true);
+
+                FileManager.Write(fileRelativePath, updatedData);
             }
         }
 
