@@ -41,7 +41,7 @@ namespace UI
 
         private void OnGUI()
         {
-            if (inputField.isFocused && Input.GetKey(KeyCode.Return))
+            if (inputField.isFocused && (Input.GetKey(KeyCode.Return)||(Input.GetKey(KeyCode.KeypadEnter))))
             {
                 var inEditMode = inputField.gameObject.activeSelf;
                 if (inEditMode)
