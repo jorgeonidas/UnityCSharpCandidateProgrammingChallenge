@@ -29,13 +29,11 @@ namespace UI
 
         private void OnEnable()
         {
-            TableCell.cellEditedAction += UpdateCell;
             FileWatcher.fileChangedAction += SetFileChangedFlag;
         }
 
         private void OnDisable()
         {
-            TableCell.cellEditedAction -= UpdateCell;
             FileWatcher.fileChangedAction -= SetFileChangedFlag;
         }
 
@@ -113,32 +111,6 @@ namespace UI
                         cell.FillCell("<color=red>No Exist</color>");
                     }
                 }
-            }
-        }
-
-        public void AddAction()
-        {
-
-        }
-
-        public void DeleteAction()
-        {
-
-        }
-
-        public void UpdateCell(Vector2 cellCoord, string newValue)
-        {
-            if(newValue != "")
-            {
-                int dataIndexToModify = (int)cellCoord.x;
-                int fieldIndexToModify = (int)cellCoord.y;
-
-                var teamMemberToModify = teamMembers.Data[dataIndexToModify];
-                var memberFields = teamMemberToModify.GetType().GetFields();
-                memberFields.ElementAt(fieldIndexToModify).SetValue(teamMemberToModify, newValue);
-                string updatedData = JsonUtility.ToJson(teamMembers, true);
-
-                FileManager.Write(fileRelativePath, updatedData);
             }
         }
 

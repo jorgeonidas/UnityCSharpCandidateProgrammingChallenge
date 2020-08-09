@@ -4,50 +4,32 @@
         "ID",
         "Name",
         "Role",
-        "Nickname",
+        "Nickname"
     ],
     "Data": [
         {
-            "ID": "003",
-            "Name": "Bucci",
-            "Role": "Dev",
-            "Nickname": "JM"
-        },
-        {
-            "ID": "002",
-            "Name": "Claudio",
+            "ID": "001",
+            "Name": "John Doe",
             "Role": "Engineer",
-            "Nickname": "Claw"
+            "Nickname": "KillerJo",
         },
         {
-            "ID": "055",
-            "Name": "Oritz",
+            "ID": "023",
+            "Name": "Claire Dawn",
+            "Role": "Engineer",
+            "Nickname": "Claw",
+        },
+        {
+            "ID": "012",
+            "Name": "Paul Beef",
             "Role": "Designer",
-            "Nickname": "BeefyPaul"
+            "Nickname": "BeefyPaul",
         },
         {
             "ID": "056",
             "Name": "Sally Sue",
             "Role": "Artist",
-            "Nickname": "Sue5"
-        },
-        {
-            "ID": "056",
-            "Name": "Sally Sue",
-            "Role": "Artist",
-            "Nickname": "Sue5"
-        },
-        {
-            "ID": "056",
-            "Name": "Sally Sue",
-            "Role": "Artist",
-            "Nickname": "Sue5"
-        },
-        {
-            "ID": "056",
-            "Name": "Sally Sue",
-            "Role": "Artist",
-            "Nickname": "Sue5"
+            "Nickname": "Sue5555",
         },
     ]
 }
