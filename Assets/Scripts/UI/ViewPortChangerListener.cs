@@ -6,26 +6,25 @@ namespace UI
 {
     public class ViewPortChangerListener : MonoBehaviour
     {
-        RectTransform rectTransform;
-        // Start is called before the first frame update
-        void Awake()
+        private void OnEnable()
         {
-            rectTransform = GetComponent<RectTransform>();
+            DataDisplayer.updateViewportAction = RecalculateViewPortPosition;
         }
 
-        void OnRectTransformDimensionsChange()
+        private void OnDisable()
         {
-            RecalculateViewPortPosition();
+            DataDisplayer.updateViewportAction -= RecalculateViewPortPosition;
         }
 
-        public void RecalculateViewPortPosition()
+        public void RecalculateViewPortPosition(float cellWidth, int columCount)
         {
-            if (rectTransform == null)
-                rectTransform = GetComponent<RectTransform>();
+            var rectTransform = GetComponent<RectTransform>();
 
-            var widht = rectTransform.rect.width;
-            var newXPos = widht / 2;
+            var width = cellWidth * columCount;
+            var newXPos = width / 2;
+            rectTransform.sizeDelta = new Vector2(width, rectTransform.rect.height);
             rectTransform.anchoredPosition = new Vector2(-newXPos, rectTransform.anchoredPosition.y);
+            
         }
     }
 }

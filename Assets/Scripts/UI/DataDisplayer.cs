@@ -12,6 +12,8 @@ namespace UI
 {
     public class DataDisplayer : MonoBehaviour
     {
+        public static Action<float, int> updateViewportAction;
+
         [Header("File Relative Path")]
         public string fileRelativePath = "JsonChallenge.json";
         [Header("UI elements")]
@@ -62,8 +64,7 @@ namespace UI
                 ClearCells();
                 var headers = teamMembersModel.ColumnHeaders;
                 var data = teamMembersModel.Data;
-                gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-                gridLayoutGroup.constraintCount = headers.Count;
+                
                 //title
                 tableTitleText.text = teamMembersModel.Title;
                 //fill headers
@@ -87,7 +88,13 @@ namespace UI
 
         public void FillHeaders(List<string> headers)
         {
-            columCount = headers.Count();
+            gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            gridLayoutGroup.constraintCount = headers.Count;
+            columCount = gridLayoutGroup.constraintCount;
+
+            if (updateViewportAction != null)
+                updateViewportAction(gridLayoutGroup.cellSize.x, columCount);
+
             for (int i = 0; i < columCount; i++)
             {
                 var header = Instantiate(cellItem, gridLayoutGroup.transform);
