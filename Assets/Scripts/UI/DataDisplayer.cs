@@ -16,6 +16,7 @@ namespace UI
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
+        public RectTransform viewPortRect;
 
         TeamMembersModel teamMembers;
         [Header("CellElement")]
@@ -114,6 +115,7 @@ namespace UI
                 }
             }
         }
+
         public void SetFileChangedFlag()
         {
             fileChangedFlag = true;
