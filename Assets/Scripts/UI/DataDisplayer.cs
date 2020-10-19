@@ -70,7 +70,7 @@ namespace UI
                 //fill headers
                 
                 FillHeaders(headers);
-                FillData(data);
+                FillData(data, headers);
             }
             catch(Exception e)
             {
@@ -102,22 +102,30 @@ namespace UI
             }
         }
 
-        public void FillData(List<TeamMemberModel> data)
+        public void FillData(List<TeamMemberModel> data, List<string> headers)
         {
-            for(int row = 0; row < data.Count(); row++)
+            for (int row = 0; row < data.Count(); row++)
             {
                 var memberFields = data[row].GetType().GetFields();
-                for (int colum = 0; colum < columCount; colum++)
+
+                for (int colum = 0; colum < headers.Count; colum++)
                 {
+                    bool fieldExist = false;
                     var cell = Instantiate(cellItem, gridLayoutGroup.transform);
-                    if(colum < memberFields.Count())
+                    foreach(var field in memberFields)
                     {
-                        cell.FillCell((string)memberFields.ElementAt(colum).GetValue(data[row]));
-                        cell.SetCellCoord(row, colum);
+                        if(field.Name == headers.ElementAt(colum))
+                        {
+                            cell.FillCell((string)field.GetValue(data[row]));
+                            cell.SetCellCoord(row, colum);
+                            fieldExist = true;
+                        }
                     }
-                    else
+
+                    if (!fieldExist)
                     {
-                        cell.FillCell("<color=red>No Exist</color>");
+                        cell.FillCell("<color=red> Undefined </color>");
+                        cell.SetCellCoord(row, colum);
                     }
                 }
             }
