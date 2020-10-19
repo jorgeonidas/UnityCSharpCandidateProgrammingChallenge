@@ -30,7 +30,7 @@ namespace UI
             if (this.isHeader)
                 dataText.fontStyle = FontStyle.Bold;
 
-            this.cellValue = (value != null && value != "") ? value : "<color=red>Null</color>";
+            this.cellValue = (value != null && value != "") ? value : "<color=red>Empty</color>";
             dataText.text = this.cellValue;
 
         }
