@@ -36,22 +36,5 @@ namespace FileManagment
             Regex regex = new Regex(tailingRegEx);
             return regex.Replace(jsonString, "");
         }
-
-        static public void Write(string fileName, string data)
-        {
-            string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-
-            if (File.Exists(filePath))
-            {
-                StreamWriter writer = new StreamWriter(filePath);
-                writer.Write(data);
-                writer.Close();
-            }
-            else
-            {
-                Debug.LogError(fileName + " does not exists or incorrect path");
-            }
-
-        }
     }
 }

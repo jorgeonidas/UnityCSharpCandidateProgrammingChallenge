@@ -15,7 +15,7 @@ namespace UI
         public static Action<float, int> updateViewportAction;
 
         [Header("File Relative Path")]
-        public string fileRelativePath = "JsonChallenge.json";
+        public string filename = "JsonChallenge.json";
         [Header("UI elements")]
         public Text tableTitleText;
         public GridLayoutGroup gridLayoutGroup;
@@ -51,7 +51,7 @@ namespace UI
 
         public void LoadFromFile()
         { 
-            teamMembers = FileManager.LoadModelFromJsonFile(fileRelativePath);
+            teamMembers = FileManager.LoadModelFromJsonFile(filename);
             if (teamMembers != null)
                 Fill(teamMembers);
             else
@@ -117,7 +117,6 @@ namespace UI
                         if(field.Name == headers.ElementAt(colum))
                         {
                             cell.FillCell((string)field.GetValue(data[row]));
-                            cell.SetCellCoord(row, colum);
                             fieldExist = true;
                         }
                     }
@@ -125,7 +124,6 @@ namespace UI
                     if (!fieldExist)
                     {
                         cell.FillCell("<color=red> Undefined </color>");
-                        cell.SetCellCoord(row, colum);
                     }
                 }
             }
