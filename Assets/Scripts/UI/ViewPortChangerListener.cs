@@ -30,14 +30,14 @@ namespace UI
             DataDisplayer.updateViewportAction -= RecalculateViewPortPosition;
         }
 
-        public void RecalculateViewPortPosition(float cellWidth, int columCount)
+        public void RecalculateViewPortPosition(int columCount)
         {
+            var cellWidth = originalCellZise;
             var widthToCheck = cellWidth * columCount;
-            gridLayoutGroup.cellSize = new Vector2(originalCellZise, gridLayoutGroup.cellSize.y);
+            gridLayoutGroup.cellSize = new Vector2(cellWidth, gridLayoutGroup.cellSize.y);
             if (widthToCheck > maxWidth)
             {
-                Debug.Log("Divide Cells");
-                cellWidth = maxWidth / columCount;
+                cellWidth = (maxWidth / columCount);
                 gridLayoutGroup.cellSize = new Vector2(cellWidth, gridLayoutGroup.cellSize.y);
             }
             var newXPos = maxWidth / 2;

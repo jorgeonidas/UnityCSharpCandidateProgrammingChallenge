@@ -12,7 +12,7 @@ namespace UI
 {
     public class DataDisplayer : MonoBehaviour
     {
-        public static Action<float, int> updateViewportAction;
+        public static Action<int> updateViewportAction;
 
         [Header("File Relative Path")]
         public string filename = "JsonChallenge.json";
@@ -93,7 +93,7 @@ namespace UI
             columCount = gridLayoutGroup.constraintCount;
 
             if (updateViewportAction != null)
-                updateViewportAction(gridLayoutGroup.cellSize.x, columCount);
+                updateViewportAction(columCount);
 
             for (int i = 0; i < columCount; i++)
             {
