@@ -24,13 +24,15 @@ namespace UI
         public void FillCell(string value, bool header = false)
         {
             this.isHeader = header;
-
-            dataText.fontSize = this.isHeader ? fontSizeHeader : fontSizeRegular;
+            
             if (this.isHeader)
                 dataText.fontStyle = FontStyle.Bold;
 
             this.cellValue = (value != null && value != "") ? value : "<color=red>Empty</color>";
             dataText.text = this.cellValue;
+
+            dataText.resizeTextMaxSize = this.isHeader ? fontSizeHeader : fontSizeRegular;
+            dataText.fontSize = this.isHeader ? fontSizeHeader : fontSizeRegular;
 
         }
     }
